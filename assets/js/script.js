@@ -114,7 +114,7 @@ var getCityForecast = function () {
     });
 
   var cityBtnEl = $("<button>").addClass("btn btn-secondary btn-block").text(cityName);
-  $("#searched-cities").append(cityBtnEl);
+  $("#searched-cities").append(cityBtnEl).on("click", loadSavedSearch);
 
   saveSearch()
 };
@@ -124,6 +124,7 @@ var saveSearch = function () {
 };
 
 var loadSavedSearch = function () {
+  var cityName = $("#city-name").val();
     // get data from local storage
    var savedSearchedCities = localStorage.getItem("searchedCities")
     if (!savedSearchedCities) {
@@ -131,17 +132,17 @@ var loadSavedSearch = function () {
     } 
     // turn into string JSON again 
     savedSearchedCities = JSON.parse(savedSearchedCities)
-    
+    console.log(savedSearchedCities)
     // make data to display on page again 
     // loop through savedTasks array
     for (var i = 0; i < savedSearchedCities.length; i++) {
     // pass each task object into the `createTaskEl()` function
-    if (savedSearchedCities[i].name === cityName) {
-    getCityForecast(savedSearchedCities[i].name);
+    if (savedSearchedCities.name === cityName) {
+    getCityForecast(savedSearchedCities.name);
     }
   }
 }
 
 $(".btn").on("click", getCityForecast);
-$(".city-btn").on("click", loadSavedSearch);
+
 
